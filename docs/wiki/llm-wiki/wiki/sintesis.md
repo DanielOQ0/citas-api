@@ -10,6 +10,8 @@
 
 ## Estado
 
-No hay aplicación inicial, HU/DoD aprobadas ni contrato REST. La implementación funcional permanece fuera del alcance de este bootstrap documental.
+Existe un primer incremento funcional de identidad: Spring Boot 3.5 + JPA/Flyway/JWT en `citas-api` y Angular en `citas-web`. Login consume REST real, persiste access/refresh en cliente, redirige por el rol devuelto por backend y protege el shell con guard. El contrato está documentado en [contratos REST](contratos-rest.md).
+
+HU-003 está marcada como lista con evidencia de integración. HU-002 y HU-004 siguen pendientes por falta de formulario de registro conectado y cierre/renovación integrados en UI, respectivamente. El resto de historias no está implementado.
 
 Consultar [preguntas abiertas](preguntas-abiertas.md) y [riesgos](riesgos.md) antes de diseñar o implementar.

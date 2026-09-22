@@ -4,3 +4,4 @@
 |---|---|---|
 | 2026-09-15 | INGEST | Se incorporaron las fuentes normativas y de gobierno iniciales; se excluyó `database/reference/` para preservar la actividad de 3FN. |
 | 2026-09-15 | LEARN | Se registró que ambos repositorios parten en `main`, sin `develop`; la rama de trabajo de `citas-api` fue creada para documentar esta Wiki. |
+| 2026-09-22 | BUILDER/VERIFIER | Se implementó y verificó el incremento de identidad: registro USER, login JWT access/refresh, `/api/me`, refresh rotado, logout revocable y consumo Angular. `mvn test` y `npm run build` pasan. HU-003 lista; HU-002/HU-004 pendientes. |

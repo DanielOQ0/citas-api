@@ -1,0 +1,19 @@
+spring:
+  application.name: citas-api
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:citas_fcv_training}?serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${DB_USER:citas_app}
+    password: ${DB_PASSWORD:CHANGE_ME}
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: validate
+  flyway.enabled: true
+server.port: ${PORT:8080}
+app:
+  jwt:
+    access-secret: ${JWT_ACCESS_SECRET:dev-access-secret-change-me-32-chars-min}
+    refresh-secret: ${JWT_REFRESH_SECRET:dev-refresh-secret-change-me-32-chars-min}
+    access-minutes: ${JWT_ACCESS_MINUTES:15}
+    refresh-days: ${JWT_REFRESH_DAYS:7}
+  cors-origin: ${FRONTEND_ORIGIN:http://localhost:3000}
+  seed-demo-users: ${SEED_DEMO_USERS:true}

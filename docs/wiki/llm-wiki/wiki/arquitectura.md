@@ -13,3 +13,9 @@ Fuente: [restricciones técnicas](../raw/restricciones-tecnicas.md) y [README wo
 ## Coordinación
 
 Un cambio REST exige plan previo, actualización de contrato, backend y frontend, más evidencia verificable en ambos repositorios.
+
+## Incremento de identidad verificado
+
+- `citas-api`: `AuthController`, `AuthService`, filtro JWT, entidades `users`/`roles`/`user_roles`/`refresh_tokens` y Flyway `V1__auth.sql`.
+- `citas-web`: `AuthService`, `authGuard`, formulario de login y `provideHttpClient`.
+- Verificación: `docker compose run --rm citas-api-dev mvn -q test` y `npm run build`.

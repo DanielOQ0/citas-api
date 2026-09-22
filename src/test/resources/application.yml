@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:citas;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa.hibernate.ddl-auto: validate
+  flyway.enabled: true
+app:
+  cors-origin: http://localhost:3000
+  jwt:
+    access-secret: test-access-secret-which-is-long-enough-123456
+    refresh-secret: test-refresh-secret-which-is-long-enough-123456
+    access-minutes: 15
+    refresh-days: 7
+  seed-demo-users: false

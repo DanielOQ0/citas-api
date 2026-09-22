@@ -1,0 +1,13 @@
+package co.fcv.citas.auth;
+import io.jsonwebtoken.Claims; import org.springframework.beans.factory.annotation.Value; import org.springframework.http.HttpStatus; import org.springframework.security.crypto.password.PasswordEncoder; import org.springframework.stereotype.Service; import org.springframework.web.server.ResponseStatusException; import java.time.Instant; import java.util.*;
+@Service public class AuthService {
+ private final UserRepository users; private final RefreshTokenRepository refreshes; private final PasswordEncoder encoder; private final JwtService jwt; private final long refreshDays;
+ public AuthService(UserRepository u,RefreshTokenRepository r,PasswordEncoder e,JwtService j,@Value("${app.jwt.refresh-days}") long d){users=u;refreshes=r;encoder=e;jwt=j;refreshDays=d;}
+ public AuthDtos.TokenResponse register(AuthDtos.RegisterRequest r){if(users.existsByEmailIgnoreCase(r.email())||users.existsByDocumentNumber(r.documentNumber())) throw new ResponseStatusException(HttpStatus.CONFLICT,"Email o documento ya registrado"); UserEntity u=new UserEntity(r.firstName(),r.lastName(),r.documentType(),r.documentNumber(),r.email().toLowerCase(),r.phone(),encoder.encode(r.password()),Role.USER); return issue(users.save(u));}
+ public AuthDtos.TokenResponse login(AuthDtos.LoginRequest r){UserEntity u=users.findByEmailIgnoreCase(r.email()).orElseThrow(this::invalid); if(!u.isActive()||!encoder.matches(r.password(),u.getPasswordHash())) throw invalid(); return issue(u);}
+ public AuthDtos.TokenResponse refresh(String raw){try{Claims c=jwt.parseRefresh(raw); if(!"refresh".equals(c.get("type"))) throw invalid(); RefreshTokenEntity rt=refreshes.findByTokenId(c.getId()).orElseThrow(this::invalid); if(rt.getRevokedAt()!=null||rt.getExpiresAt().isBefore(Instant.now())) throw invalid(); rt.revoke(); refreshes.save(rt); return issue(rt.getUser());}catch(Exception e){throw invalid();}}
+ public void logout(String raw){try{Claims c=jwt.parseRefresh(raw); refreshes.findByTokenId(c.getId()).ifPresent(t->{t.revoke();refreshes.save(t);});}catch(Exception ignored){}}
+ private AuthDtos.TokenResponse issue(UserEntity u){String id=UUID.randomUUID().toString(); String refresh=jwt.refresh(u,id); refreshes.save(new RefreshTokenEntity(u,id,Instant.now().plusSeconds(refreshDays*86400))); return new AuthDtos.TokenResponse(jwt.access(u),refresh,jwt.accessSeconds(),view(u));}
+ private AuthDtos.UserView view(UserEntity u){return new AuthDtos.UserView(u.getId(),u.getFirstName()+" "+u.getLastName(),u.getEmail(),Set.copyOf(u.getRoles()));}
+ private ResponseStatusException invalid(){return new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Credenciales inválidas");}
+}
