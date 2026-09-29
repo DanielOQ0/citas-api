@@ -11,8 +11,8 @@ public final class SchedulingDtos {
   public record EpsRequest(@NotBlank String code,@NotBlank String name,boolean active) {}
   public record PlanRequest(@NotNull Long epsId,@NotNull Long regimeId,@NotBlank String code,@NotBlank String name,boolean active) {}
   public record EpsItem(Long id,String code,String name,boolean active) {}
-  public record SpecialtyRequest(@NotBlank String name, @NotNull @Min(30) @Max(60) Integer durationMinutes, boolean active) {}
-  public record SpecialtyItem(Long id, String name, int durationMinutes, boolean active) {}
+  public record SpecialtyRequest(@NotBlank String name, @NotNull @Min(30) @Max(60) Integer durationMinutes, boolean requiresAdminApproval, boolean active) {}
+  public record SpecialtyItem(Long id, String name, int durationMinutes, boolean requiresAdminApproval, boolean active) {}
   public record ProfessionalRequest(@NotBlank String firstName, @NotBlank String lastName, @NotBlank String documentType,
       @NotBlank String documentNumber, @Email @NotBlank String email, @NotBlank String phone, @Size(min=8) String password,
       @NotBlank String professionalCode, @NotBlank String licenseNumber) {}

@@ -16,6 +16,7 @@ public class SchedulingController {
   @GetMapping("/catalogs/reschedule-statuses") public List<SchedulingDtos.CatalogItem> rescheduleStatuses(){return s.statuses("reschedule_request_statuses");}
   @GetMapping("/catalogs/insurance-plans") public List<SchedulingDtos.PlanItem> plans(){return s.plans();}
   @GetMapping("/catalogs/specialties") public List<SchedulingDtos.SpecialtyItem> catalogSpecialties(){return s.specialties().stream().filter(SchedulingDtos.SpecialtyItem::active).toList();}
+  @GetMapping("/catalogs/professionals") public List<SchedulingDtos.ProfessionalItem> catalogProfessionals(){return s.catalogProfessionals();}
   @GetMapping("/admin/eps") public List<SchedulingDtos.EpsItem> eps(Authentication a){return s.adminEps(a);}
   @PostMapping("/admin/eps") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.EpsItem createEps(@Valid @RequestBody SchedulingDtos.EpsRequest r,Authentication a){return s.createEps(r,a);}
   @PatchMapping("/admin/eps/{id}") public SchedulingDtos.EpsItem updateEps(@PathVariable long id,@Valid @RequestBody SchedulingDtos.EpsRequest r,Authentication a){return s.updateEps(id,r,a);}
@@ -31,6 +32,8 @@ public class SchedulingController {
   @PatchMapping("/admin/professionals/{id}/active") @ResponseStatus(HttpStatus.NO_CONTENT) public void active(@PathVariable long id,@RequestParam boolean active,Authentication a){s.active(id,active,a);}
   @GetMapping("/professional/availability-blocks") public List<SchedulingDtos.AvailabilityBlockItem> blocks(@RequestParam(required=false) LocalDate date,@RequestParam(required=false) Long locationId,Authentication a){return s.blocks(date,locationId,a);}
   @PostMapping("/professional/availability-blocks") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.AvailabilityBlockItem block(@Valid @RequestBody SchedulingDtos.AvailabilityBlockRequest r,Authentication a){return s.addBlock(r,a);}
+  @PatchMapping("/professional/availability-blocks/{id}") public SchedulingDtos.AvailabilityBlockItem updateBlock(@PathVariable long id,@Valid @RequestBody SchedulingDtos.AvailabilityBlockRequest r,Authentication a){return s.updateBlock(id,r,a);}
+  @DeleteMapping("/professional/availability-blocks/{id}") @ResponseStatus(HttpStatus.NO_CONTENT) public void deleteBlock(@PathVariable long id,Authentication a){s.deleteBlock(id,a);}
   @GetMapping("/availability") public List<SchedulingDtos.AvailabilityItem> availability(@RequestParam long locationId,@RequestParam long specialtyId,@RequestParam(required=false) Long professionalId,@RequestParam LocalDate date){return s.availability(locationId,specialtyId,professionalId,date);}
   @PostMapping("/appointments") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.AppointmentItem appointment(@Valid @RequestBody SchedulingDtos.AppointmentRequest r,Authentication a){return s.book(r,a);}
   @GetMapping("/admin/appointments") public List<SchedulingDtos.AppointmentItem> requested(@RequestParam(required=false) Long locationId,@RequestParam(required=false) Long professionalId,@RequestParam(required=false) Long specialtyId,@RequestParam(required=false) LocalDate date,Authentication a){return s.requested(locationId,professionalId,specialtyId,date,a);}

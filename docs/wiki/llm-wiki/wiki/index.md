@@ -1,6 +1,6 @@
 # Índice de la LLM Wiki
 
-Última actualización: 2026-09-24 (montaje Docker de desarrollo y verificación de salud).
+Última actualización: 2026-09-29 (cierre técnico de incrementos S2–S4 y contrato REST vigente).
 
 | Tema | Página |
 |---|---|

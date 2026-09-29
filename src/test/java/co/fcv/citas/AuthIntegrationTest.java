@@ -16,4 +16,5 @@ import co.fcv.citas.auth.AuthDtos; import org.junit.jupiter.api.Test; import org
   mvc.perform(post("/api/auth/refresh").contentType(MediaType.APPLICATION_JSON).content("{\"refreshToken\":\""+refresh+"\"}" )).andExpect(status().isUnauthorized());
  }
  @Test void invalidCredentialsDoNotIssueTokens() throws Exception {mvc.perform(post("/api/auth/login").contentType(MediaType.APPLICATION_JSON).content("{\"email\":\"nobody@example.test\",\"password\":\"wrong\"}" )).andExpect(status().isUnauthorized()).andExpect(jsonPath("$.accessToken").doesNotExist());}
+ @Test void passwordRecoveryDoesNotLeakTokenByDefaultAndRejectsInvalidReset() throws Exception {mvc.perform(post("/api/auth/password-recovery").contentType(MediaType.APPLICATION_JSON).content("{\"email\":\"nobody@example.test\"}" )).andExpect(status().isOk()).andExpect(jsonPath("$.accepted").value(true)).andExpect(jsonPath("$.developmentToken").value(org.hamcrest.Matchers.nullValue()));mvc.perform(post("/api/auth/password-reset").contentType(MediaType.APPLICATION_JSON).content("{\"token\":\"invalid\",\"password\":\"password123\"}" )).andExpect(status().isBadRequest());}
 }

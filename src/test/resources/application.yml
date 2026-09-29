@@ -6,6 +6,7 @@ spring:
     password:
   jpa.hibernate.ddl-auto: validate
   flyway.enabled: true
+  flyway.target: 4
 app:
   cors-origin: http://localhost:3000
   jwt:

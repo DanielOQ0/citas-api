@@ -19,3 +19,5 @@ app:
     refresh-days: ${JWT_REFRESH_DAYS:7}
   cors-origin: ${FRONTEND_ORIGIN:http://localhost:4200}
   seed-demo-users: ${SEED_DEMO_USERS:true}
+  password-recovery:
+    expose-token: ${EXPOSE_RECOVERY_TOKEN:false}
