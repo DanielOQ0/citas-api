@@ -7,7 +7,9 @@ spring:
   jpa:
     open-in-view: false
     hibernate.ddl-auto: validate
-  flyway.enabled: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 server.port: ${PORT:8080}
 app:
   jwt:
@@ -15,5 +17,5 @@ app:
     refresh-secret: ${JWT_REFRESH_SECRET:dev-refresh-secret-change-me-32-chars-min}
     access-minutes: ${JWT_ACCESS_MINUTES:15}
     refresh-days: ${JWT_REFRESH_DAYS:7}
-  cors-origin: ${FRONTEND_ORIGIN:http://localhost:3000}
+  cors-origin: ${FRONTEND_ORIGIN:http://localhost:4200}
   seed-demo-users: ${SEED_DEMO_USERS:true}

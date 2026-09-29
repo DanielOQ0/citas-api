@@ -20,5 +20,5 @@ public class UserEntity {
   public UserEntity(String firstName,String lastName,String documentType,String documentNumber,String email,String phone,String passwordHash,Role role) {
     this.firstName=firstName; this.lastName=lastName; this.documentType=documentType; this.documentNumber=documentNumber; this.email=email; this.phone=phone; this.passwordHash=passwordHash; this.roles.add(role);
   }
-  public Long getId(){return id;} public String getFirstName(){return firstName;} public String getLastName(){return lastName;} public String getEmail(){return email;} public String getPasswordHash(){return passwordHash;} public boolean isActive(){return active;} public Set<Role> getRoles(){return roles;}
+  public Long getId(){return id;} public String getFirstName(){return firstName;} public String getLastName(){return lastName;} public String getEmail(){return email;} public String getPhone(){return phone;} public void setPhone(String phone){this.phone=phone;} public String getPasswordHash(){return passwordHash;} public boolean isActive(){return active;} public Set<Role> getRoles(){return roles;}
 }

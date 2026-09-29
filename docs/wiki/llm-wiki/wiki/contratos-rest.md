@@ -26,6 +26,29 @@ Los errores de credenciales devuelven `401` sin diferenciar email de contraseña
 
 Las cuentas demo son sintéticas y solo se siembran cuando `SEED_DEMO_USERS=true`.
 
+## Agenda S3
+
+La API de agenda usa `/api/v1`. Las fechas usan `YYYY-MM-DD`, las horas `HH:mm` y la zona de negocio es `America/Bogota`.
+
+| Método | Ruta | Actor | Resultado |
+|---|---|---|---|
+| GET | `/api/v1/catalogs/*` | público | sedes, regímenes, estados, planes activos y especialidades activas |
+| GET/POST/PATCH | `/api/v1/admin/specialties` | ADMIN | consulta y gestión de especialidades de 30/60 min |
+| GET/POST | `/api/v1/admin/professionals` | ADMIN | consulta y alta de profesionales sintéticos |
+| PUT/PATCH | `/api/v1/admin/professionals/{id}/assignments|active` | ADMIN | asignaciones y habilitación |
+| GET/POST | `/api/v1/professional/availability-blocks` | PROFESSIONAL | bloques propios futuros |
+| GET | `/api/v1/availability` | público | franjas libres según sede, especialidad y fecha |
+| POST | `/api/v1/appointments` | USER | `APPROVED` para Medicina General o `REQUESTED` para especializada |
+| GET | `/api/v1/admin/appointments` | ADMIN | solicitudes especializadas pendientes |
+| POST | `/api/v1/admin/appointments/{id}/decision` | ADMIN | aprobación o rechazo con motivo obligatorio |
+| GET/PATCH | `/api/v1/users/me` | autenticado | perfil propio; solo teléfono editable |
+| PUT | `/api/v1/users/me/affiliation` | USER | afiliación por plan activo |
+| GET | `/api/v1/appointments` | USER | citas propias con filtros opcionales |
+| POST | `/api/v1/appointments/{id}/cancel` | USER | cancelación propia futura no terminal |
+| GET | `/api/v1/appointments/{id}/history` | autorizado | historial inmutable por ownership/rol |
+
+`POST /api/auth/register` acepta adicionalmente `insurancePlanId` opcional. Un plan inexistente o inactivo devuelve `400`; email o documento duplicados devuelven `409`. Una franja tomada entre búsqueda y reserva devuelve `409`.
+
 ## Restricciones que gobernarán el contrato
 
 - REST/JSON entre `citas-web` y `citas-api`, sin BFF.

@@ -7,6 +7,8 @@
 - No existe Express ni BFF: el navegador consumirá directamente Spring Boot por REST.
 - La URL del backend debe configurarse por environment en el frontend.
 - MySQL 8.4, JPA y Flyway son parte de la arquitectura objetivo.
+- El entorno Docker de desarrollo arranca MySQL, Spring Boot y Angular con `docker compose up -d`; Angular se publica en `localhost:4200` y la API en `localhost:8080`.
+- La disponibilidad operativa de la API se comprueba con `GET /actuator/health`.
 
 Fuente: [restricciones técnicas](../raw/restricciones-tecnicas.md) y [README workspace](../raw/readme-workspace.md).
 

@@ -5,4 +5,6 @@ import jakarta.validation.Valid; import org.springframework.http.HttpStatus; imp
  @PostMapping("/login") public AuthDtos.TokenResponse login(@Valid @RequestBody AuthDtos.LoginRequest r){return auth.login(r);}
  @PostMapping("/refresh") public AuthDtos.TokenResponse refresh(@Valid @RequestBody AuthDtos.RefreshRequest r){return auth.refresh(r.refreshToken());}
  @PostMapping("/logout") @ResponseStatus(HttpStatus.NO_CONTENT) public void logout(@Valid @RequestBody AuthDtos.LogoutRequest r){auth.logout(r.refreshToken());}
+ @PostMapping("/password-recovery") public AuthDtos.PasswordRecoveryResponse passwordRecovery(@Valid @RequestBody AuthDtos.PasswordRecoveryRequest r){return auth.passwordRecovery(r.email());}
+ @PostMapping("/password-reset") @ResponseStatus(HttpStatus.NO_CONTENT) public void passwordReset(@Valid @RequestBody AuthDtos.PasswordResetRequest r){auth.passwordReset(r.token(),r.password());}
 }

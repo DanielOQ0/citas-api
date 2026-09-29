@@ -1,5 +1,7 @@
 # Índice de la LLM Wiki
 
+Última actualización: 2026-09-24 (montaje Docker de desarrollo y verificación de salud).
+
 | Tema | Página |
 |---|---|
 | Síntesis y alcance actual | [sintesis.md](sintesis.md) |
