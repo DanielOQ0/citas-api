@@ -2,67 +2,90 @@
 
 ## Estado
 
-Contrato vigente de los incrementos S2–S4 (2026-09-29). HU-021 a HU-026 permanecen fuera de cierre S4.
+**Contrato oficial** (D-21 del [plan de cierre](../../scrum/plan-cierre-2026-10.md)), vigente desde 2026-10-04 para HU-001 a HU-026. Cualquier cambio sigue la secuencia cross-repo: contrato → `citas-api` → `citas-web` → evidencia. Verificación: pruebas de integración de `citas-api` (`*IntegrationTest`) y E2E en [evidencias/2026-10](../../scrum/evidencias/2026-10/README.md).
 
-## Identidad
+## Convenciones
 
-Base URL local: `http://localhost:8080`.
+- Base URL local: `http://localhost:8080`; el cliente la toma de `src/environments/environment.ts` (override de laboratorio: `localStorage.fcv_api_url`). REST/JSON directo, sin BFF.
+- Autenticación: `Authorization: Bearer <access JWT>`. Access y refresh son JWT separados (secretos y claim `type` distintos).
+- Fechas `YYYY-MM-DD`, horas `HH:mm[:ss]`, fecha-hora ISO local. Zona de negocio `America/Bogota` (el backend usa un `Clock` de esa zona).
+- CORS explícito al origen configurado en `FRONTEND_ORIGIN`.
+- **Errores** (todos los códigos 4xx/5xx): `{"status","error","message","fieldErrors":[{"field","message"}],"path"}`.
+  - `400` validación o regla de entrada (con `fieldErrors` si viene de Bean Validation).
+  - `401` sin token o token inválido (el cliente intenta un refresh una sola vez).
+  - `403` rol u ownership no autorizados.
+  - `404` recurso inexistente.
+  - `405` método no soportado (catálogos fijos de solo lectura).
+  - `409` conflicto de estado, unicidad o franja tomada/retenida.
 
-| Método | Ruta | Entrada | Respuesta | Seguridad |
-|---|---|---|---|---|
-| POST | `/api/auth/register` | `firstName`, `lastName`, `documentType`, `documentNumber`, `email`, `phone`, `password` | `201` con `accessToken`, `refreshToken`, `expiresIn`, `user` | pública; crea `USER` |
-| POST | `/api/auth/login` | `email`, `password` | `200` con tokens separados y roles | pública |
-| POST | `/api/auth/refresh` | `refreshToken` | `200` con tokens rotados | pública; refresh previo queda revocado |
-| POST | `/api/auth/logout` | `refreshToken` | `204` | pública; revoca el token |
-| POST | `/api/auth/password-recovery` | `email` | `200` con `accepted`; token solo si `EXPOSE_RECOVERY_TOKEN=true` en desarrollo | pública |
-| POST | `/api/auth/password-reset` | `token`, `password` | `204` | pública; token de un solo uso |
-| GET | `/api/me` | — | `200` con `id`, `name`, `email`, `roles` | Bearer access JWT |
+## Identidad (`/api/auth`, `/api/me`)
 
-Los errores de credenciales devuelven `401` sin diferenciar email de contraseña. Validación de payload devuelve `400`; duplicados de email/documento devuelven `409`. El frontend consume directamente estas rutas mediante `AuthService` y permite cambiar la URL con `localStorage.fcv_api_url` (por defecto `http://localhost:8080`).
+| Método | Ruta | Actor | Entrada | Respuesta | Errores |
+|---|---|---|---|---|---|
+| POST | `/api/auth/register` | público | `firstName`, `lastName`, `documentType` (CC/CE/TI/PA), `documentNumber` (5-20 alfanum.), `email`, `phone` (7-15 dígitos), `password` (≥ 8), `insurancePlanId?` | `201` `TokenResponse` (crea rol USER) | `400`, `409` email/documento |
+| POST | `/api/auth/login` | público | `email`, `password` | `200` `{accessToken, refreshToken, expiresIn, user{id,name,email,roles[]}}` | `401` genérico |
+| POST | `/api/auth/refresh` | público | `refreshToken` | `200` tokens rotados (el refresh anterior queda revocado) | `401` |
+| POST | `/api/auth/logout` | público | `refreshToken` | `204` revoca el refresh | — |
+| POST | `/api/auth/password-recovery` | público | `email` | `200` `{accepted, developmentToken?}`; token temporal (30 min) de un uso; `developmentToken` solo con `EXPOSE_RECOVERY_TOKEN=true` y también para cuentas inexistentes (no permite enumerar) | `400` |
+| POST | `/api/auth/password-reset` | público | `token`, `password` (≥ 8) | `204`; consume el token | `400` token inválido/vencido/usado |
+| GET | `/api/me` | autenticado | — | `200` `{id, name, email, roles[]}`: fuente del rol de la sesión en el cliente | `401` |
 
-### Ejemplo de login
+## Catálogos fijos (solo lectura, HU-001)
 
-```json
-{ "email": "carlos.perez@fcv.edu.co", "password": "password123" }
-```
+`GET /api/v1/catalogs/{locations|regimes|roles|appointment-statuses|reschedule-statuses}` → `[{id, code, name}]`. Públicos. `POST/PUT/PATCH/DELETE` → `405`.
+Medicina General se identifica por `specialties.is_general = TRUE` (código `MEDICINA_GENERAL`); en el cliente, "tipo general/especializada" = `requiresAdminApproval`.
 
-Las cuentas demo son sintéticas y solo se siembran cuando `SEED_DEMO_USERS=true`.
-
-## Agenda S3
-
-La API de agenda usa `/api/v1`. Las fechas usan `YYYY-MM-DD`, las horas `HH:mm` y la zona de negocio es `America/Bogota`.
-
-| Método | Ruta | Actor | Resultado |
+| Método | Ruta | Actor | Respuesta |
 |---|---|---|---|
-| GET | `/api/v1/catalogs/*` | público | sedes, regímenes, estados, planes activos y especialidades activas |
-| GET/POST/PATCH | `/api/v1/admin/specialties` | ADMIN | consulta y gestión de especialidades de 30/60 min |
-| GET/POST | `/api/v1/admin/professionals` | ADMIN | consulta y alta de profesionales sintéticos |
-| PUT/PATCH | `/api/v1/admin/professionals/{id}/assignments|active` | ADMIN | asignaciones y habilitación |
-| GET/POST/PATCH/DELETE | `/api/v1/professional/availability-blocks[/{id}]` | PROFESSIONAL | bloques propios futuros; editar/eliminar rechaza citas comprometidas |
-| GET | `/api/v1/catalogs/professionals` | público | profesionales activos para mostrar datos de citas |
-| GET | `/api/v1/availability` | público | franjas libres según sede, especialidad y fecha |
-| POST | `/api/v1/appointments` | USER | `APPROVED` general o `REQUESTED` especializada; especializada exige `reason` y retiene slots |
-| GET | `/api/v1/admin/appointments` | ADMIN | solicitudes pendientes con filtros `locationId`, `professionalId`, `specialtyId`, `date` |
-| POST | `/api/v1/admin/appointments/{id}/decision` | ADMIN | aprobación o rechazo con motivo obligatorio |
-| GET/PATCH | `/api/v1/users/me` | autenticado | perfil propio; solo teléfono editable |
-| PUT | `/api/v1/users/me/affiliation` | USER | afiliación por plan activo |
-| GET | `/api/v1/appointments` | USER | citas propias con filtros opcionales |
-| POST | `/api/v1/appointments/{id}/cancel` | USER | cancelación propia futura no terminal |
-| GET | `/api/v1/appointments/{id}/history` | autorizado | historial inmutable por ownership/rol |
-| GET | `/api/v1/professional/appointments` | PROFESSIONAL | citas `APPROVED` propias, con filtros `from`, `to`, `locationId` |
-| POST | `/api/v1/professional/appointments/{id}/close` | PROFESSIONAL | cierre posterior a la hora final como `COMPLETED` o `NO_SHOW` |
+| GET | `/api/v1/catalogs/insurance-plans` | público | planes con plan y EPS activos: `[{id, code, name, epsId, epsName, regimeId, regimeName, active}]` |
+| GET | `/api/v1/catalogs/specialties` | público | activas: `[{id, name, durationMinutes, requiresAdminApproval, active}]` |
+| GET | `/api/v1/catalogs/professionals?specialtyId&locationId` | público | profesionales activos, opcionalmente habilitados para especialidad/sede: `[{id, name, professionalCode, active}]` |
 
-`POST /api/auth/register` acepta adicionalmente `insurancePlanId` opcional. Un plan inexistente o inactivo devuelve `400`; email o documento duplicados devuelven `409`. Una franja tomada entre búsqueda y reserva devuelve `409`.
+## Administración (ADMIN; otros roles `403`)
 
-`AppointmentItem` incluye `rejectionReason`, obtenido del último evento `REJECTED`, además de sede, profesional, especialidad, fecha, hora, duración y estado. Los endpoints de citas aplican ownership: el paciente solo ve y cancela sus propias citas.
+| Método | Ruta | Entrada | Respuesta | Errores |
+|---|---|---|---|---|
+| GET/POST | `/api/v1/admin/eps` | `{code, name, active}` | `EpsItem` (`201` al crear) | `409` código |
+| PATCH/DELETE | `/api/v1/admin/eps/{id}` | `{code, name, active}` | `EpsItem` / `204` | `404`; `409` si tiene planes (desactivar) |
+| GET/POST | `/api/v1/admin/plans` | `{epsId, regimeId, code, name, active}` | `PlanItem` | `400` EPS/régimen inexistente; `409` código por EPS |
+| PATCH/DELETE | `/api/v1/admin/plans/{id}` | ídem | `PlanItem` / `204` | `409` si tiene afiliaciones (desactivar) |
+| GET/POST | `/api/v1/admin/specialties` | `{name, durationMinutes (30/60), requiresAdminApproval, active}` | `SpecialtyItem` | `400` duración; `409` nombre |
+| PATCH/DELETE | `/api/v1/admin/specialties/{id}` | ídem | `SpecialtyItem` / `204` | `409` si la usan citas o profesionales (desactivar) |
+| GET/POST | `/api/v1/admin/professionals` | `{firstName, lastName, documentType, documentNumber, email, phone, password, professionalCode, licenseNumber}` | `[{id, name, email, professionalCode, licenseNumber, active, specialtyIds[], primarySpecialtyId, locationIds[]}]` | `409` email/documento/código/matrícula |
+| PUT | `/api/v1/admin/professionals/{id}/assignments` | `{specialtyIds[], primarySpecialtyId, locationIds[]}` | `204` | `400` primaria fuera de la lista o IDs inexistentes/inactivos; `404` |
+| PATCH | `/api/v1/admin/professionals/{id}/active?active=` | — | `204`; inactivo deja de ofertarse, conserva citas y agenda | `404` |
+| GET | `/api/v1/admin/appointments?locationId&professionalId&specialtyId&date` | — | `AppointmentItem[]` en `REQUESTED` | — |
+| POST | `/api/v1/admin/appointments/{id}/decision` | `{decision: APPROVE\|REJECT, reason}` | `AppointmentItem` | `400` rechazo sin motivo; `409` no `REQUESTED` o aprobar con horario pasado; `404` |
+| GET | `/api/v1/admin/reschedule-requests?locationId&professionalId&specialtyId&date` | — | `RescheduleItem[]` en `PENDING` | — |
+| POST | `/api/v1/admin/reschedule-requests/{id}/decision` | `{decision, reason}` | `RescheduleItem`; aprobar mueve la cita y se audita | `400` rechazo sin motivo; `409` no `PENDING`, cita no aprobada, horario pasado o franja no disponible |
 
-## Restricciones que gobernarán el contrato
+## Profesional (PROFESSIONAL; solo recursos propios)
 
-- REST/JSON entre `citas-web` y `citas-api`, sin BFF.
-- Autorización por roles y ownership.
-- Validación server-side y CORS explícito.
-- El contrato debe documentarse durante el proyecto y cualquier cambio exige evidencia en ambos repositorios.
+| Método | Ruta | Entrada | Respuesta | Errores |
+|---|---|---|---|---|
+| GET | `/api/v1/professional/availability-blocks?date&locationId` | — | `[{id, locationId, locationName, date, startTime, endTime, slots, committedSlots}]` | `403` otro rol |
+| POST | `/api/v1/professional/availability-blocks` | `{locationId, date, startTime, endTime}` | `201` bloque (slots de 30 min) | `400` pasado, no alineado o sede no asignada; `403` inactivo; `409` solape |
+| PATCH/DELETE | `/api/v1/professional/availability-blocks/{id}` | ídem / — | bloque / `204` | `404` ajeno; `409` slot reservado, retenido o con reprogramación PENDING |
+| GET | `/api/v1/professional/appointments?from&to&locationId` | — | `AppointmentItem[]` solo `APPROVED` propias (incluye `patientName`) | `403` |
+| POST | `/api/v1/professional/appointments/{id}/close` | `{status: COMPLETED\|NO_SHOW, reason?}` | `AppointmentItem` | `403` ajena; `409` no `APPROVED` o aún no termina |
 
-Fuente: [PRD, RF-20 y seguridad](../raw/prd-v1.0.md), [restricciones](../raw/restricciones-tecnicas.md).
+## Paciente (USER; ADMIN/PROFESSIONAL reciben `403`)
 
-No se deben inventar rutas, payloads, códigos de error ni paginación antes de HU/CA aprobadas.
+| Método | Ruta | Entrada | Respuesta | Errores |
+|---|---|---|---|---|
+| GET | `/api/v1/availability?locationId&specialtyId&date&professionalId?` | público | `[{professionalId, professionalName, locationId, specialtyId, date, startTime, durationMinutes}]`: solo franjas futuras que completan la duración (60 min = 2 slots consecutivos) de especialidad activa y profesional habilitado | — |
+| POST | `/api/v1/appointments` | `{professionalId, locationId, specialtyId, date, startTime, reason?}` | `201` `AppointmentItem`: `APPROVED` (general, auditado por SYSTEM) o `REQUESTED` (especializada, retiene slots) | `400` pasado/no habilitado/especialidad inactiva; `409` franja tomada o retenida |
+| GET | `/api/v1/appointments?status&from&to` | — | `AppointmentItem[]` propias | `400` estado desconocido |
+| POST | `/api/v1/appointments/{id}/cancel` | — | `204`; libera slots y cancela su reprogramación PENDING | `403` ajena; `409` pasada o terminal |
+| GET | `/api/v1/appointments/{id}/history` | paciente dueño, profesional de la cita o ADMIN | `[{status, actorId, actorName, source (SYSTEM/USER/ADMIN), reason, occurredAt}]` | `403`; `404` |
+| POST | `/api/v1/appointments/{id}/reschedule-requests` | `{date, startTime}` | `201` `RescheduleItem` `PENDING` (retiene la nueva franja; la original se conserva) | `400` franja pasada o igual; `403`; `409` cita no `APPROVED`/no futura, ya hay una PENDING o franja no disponible |
+| POST | `/api/v1/appointments/{id}/reschedule-requests/{requestId}/keep` | — | `RescheduleItem` con `patientAction = KEEP_APPOINTMENT` | `403`; `409` si no está rechazada o ya respondida |
+| GET/PATCH | `/api/v1/users/me` | autenticado; PATCH `{phone}` (7-15 dígitos) | `{id, name, firstName, lastName, email, documentType, documentNumber, phone}` | `400` |
+| GET/PUT | `/api/v1/users/me/affiliation` | PUT `{epsId, insurancePlanId}` | `{id, epsId, epsName, planId, planName, regimeName, active}` o `null` | `400` plan de otra EPS, inexistente o inactivo |
+
+### Recursos compartidos
+
+- `AppointmentItem`: `{id, status, patientName, professionalId, professionalName, locationId, locationName, specialtyId, specialtyName, requiresAdminApproval, date, startTime, endTime, durationMinutes, reason, rejectionReason, reschedule}`. `durationMinutes` es la duración real de la cita. `reschedule` es la última solicitud: `{id, status, requestedDate, requestedStart, decisionReason, patientAction}`.
+- `RescheduleItem`: `{id, appointmentId, status, patientName, professionalId, professionalName, specialtyId, specialtyName, locationId, locationName, previousDate, previousStart, requestedDate, requestedStart, durationMinutes, decisionReason, patientAction}`.
+
+Fuente: [PRD, RF-01 a RF-20](../raw/prd-v1.0.md), [restricciones](../raw/restricciones-tecnicas.md), HU aprobadas en `docs/wiki/scrum/`.

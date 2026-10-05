@@ -3,7 +3,7 @@ import co.fcv.citas.auth.AuthDtos; import org.junit.jupiter.api.Test; import org
 @SpringBootTest @AutoConfigureMockMvc class AuthIntegrationTest {
  @Autowired MockMvc mvc;
  @Test void registerLoginAndRefreshRevocationWork() throws Exception {
-  String register="{\"firstName\":\"Ana\",\"lastName\":\"Prueba\",\"documentType\":\"CC\",\"documentNumber\":\"1001\",\"email\":\"ana@example.test\",\"phone\":\"3000000000\",\"password\":\"password123\"}";
+  String register="{\"firstName\":\"Ana\",\"lastName\":\"Prueba\",\"documentType\":\"CC\",\"documentNumber\":\"100100\",\"email\":\"ana@example.test\",\"phone\":\"3000000000\",\"password\":\"password123\"}";
   String response=mvc.perform(post("/api/auth/register").contentType(MediaType.APPLICATION_JSON).content(register)).andExpect(status().isCreated()).andExpect(jsonPath("$.accessToken").isString()).andExpect(jsonPath("$.refreshToken").isString()).andReturn().getResponse().getContentAsString();
   String refresh=com.jayway.jsonpath.JsonPath.read(response,"$.refreshToken");
   String login="{\"email\":\"ana@example.test\",\"password\":\"password123\"}";

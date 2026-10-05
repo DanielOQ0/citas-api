@@ -1,5 +1,6 @@
 package co.fcv.citas.web;
 
+import co.fcv.citas.scheduling.domain.DomainException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import org.slf4j.Logger;
@@ -45,6 +46,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
     String detail = ex instanceof ErrorResponse response ? response.getBody().getDetail() : null;
     return body(status, detail != null ? detail : reason(status), List.of(), path(request));
+  }
+
+  /** Reglas de negocio del dominio: entrada inválida → 400; estado incompatible → 409. */
+  @ExceptionHandler(DomainException.class)
+  ResponseEntity<Object> domain(DomainException ex, HttpServletRequest request) {
+    HttpStatus status = ex.kind() == DomainException.Kind.CONFLICT ? HttpStatus.CONFLICT : HttpStatus.BAD_REQUEST;
+    return body(status, ex.getMessage(), List.of(), request.getRequestURI());
   }
 
   @ExceptionHandler(DataIntegrityViolationException.class)

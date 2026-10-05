@@ -58,7 +58,7 @@ class RoleAccessIntegrationTest {
       assertEquals(403, call(POST, "/api/v1/appointments/999/cancel", token, "{}").getStatusCode().value(), role + " cancela");
       assertEquals(403, call(POST, "/api/v1/appointments/999/reschedule-requests", token, reschedule).getStatusCode().value(), role + " reprograma");
       assertEquals(403, call(GET, "/api/v1/users/me/affiliation", token, null).getStatusCode().value(), role + " consulta afiliación");
-      assertEquals(403, call(PUT, "/api/v1/users/me/affiliation", token, "{\"insurancePlanId\":1}").getStatusCode().value(), role + " guarda afiliación");
+      assertEquals(403, call(PUT, "/api/v1/users/me/affiliation", token, "{\"epsId\":1,\"insurancePlanId\":1}").getStatusCode().value(), role + " guarda afiliación");
     }
   }
 

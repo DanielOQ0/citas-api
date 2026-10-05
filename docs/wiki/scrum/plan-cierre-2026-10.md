@@ -43,6 +43,7 @@ Origen: entrevista de planificación con el usuario (2026-10-04). Cada decisión
 | D-22 | UI nueva | Las pantallas nuevas reutilizan tokens y patrones existentes, sin pasar por Stitch; se registra en la wiki. |
 | D-23 | Roles | Rol efectivo desde el backend (`/api/me`); con varios roles, precedencia ADMIN > PROFESSIONAL > USER. Rutas lazy por rol con `canMatch`. API 403 a ADMIN/PROFESSIONAL en endpoints de paciente. |
 | D-24 | Git | Restaurar `.git` de `citas-web`. Commits locales trazables en `develop` (ambos repos). Push y merge a `main` solo con OK final del usuario. |
+| D-25 | BD (HU-001) | "El ajuste más sencillo posible": `docker-compose.yml` monta `database/reference/db.sql` como init de MySQL, así `scripts/reset-db.ps1` reconstruye el entorno y Flyway aplica V2–V7 sobre su baseline. Verificado en un MySQL temporal. Las migraciones aplicadas no se tocan; que Flyway construya el esquema desde cero queda como deuda (V4 y V7 asumen el esquema de referencia). |
 
 ## 3. Línea base (diagnóstico del 2026-10-04)
 

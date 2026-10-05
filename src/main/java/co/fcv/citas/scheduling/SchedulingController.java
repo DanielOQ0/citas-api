@@ -1,53 +1,138 @@
 package co.fcv.citas.scheduling;
 
+import co.fcv.citas.scheduling.SchedulingDtos.*;
 import jakarta.validation.Valid;
-import org.springframework.http.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
-@RestController @RequestMapping("/api/v1")
+/** Adaptador REST de agenda: traduce HTTP y delega en los casos de uso; no contiene reglas de negocio. */
+@RestController
+@RequestMapping("/api/v1")
 public class SchedulingController {
-  private final SchedulingService s; public SchedulingController(SchedulingService s){this.s=s;}
-  @GetMapping("/catalogs/locations") public List<SchedulingDtos.CatalogItem> locations(){return s.locations();}
-  @GetMapping("/catalogs/regimes") public List<SchedulingDtos.CatalogItem> regimes(){return s.regimes();}
-  @GetMapping("/catalogs/appointment-statuses") public List<SchedulingDtos.CatalogItem> appointmentStatuses(){return s.statuses("appointment_statuses");}
-  @GetMapping("/catalogs/reschedule-statuses") public List<SchedulingDtos.CatalogItem> rescheduleStatuses(){return s.statuses("reschedule_request_statuses");}
-  @GetMapping("/catalogs/insurance-plans") public List<SchedulingDtos.PlanItem> plans(){return s.plans();}
-  @GetMapping("/catalogs/specialties") public List<SchedulingDtos.SpecialtyItem> catalogSpecialties(){return s.specialties().stream().filter(SchedulingDtos.SpecialtyItem::active).toList();}
-  @GetMapping("/catalogs/professionals") public List<SchedulingDtos.ProfessionalItem> catalogProfessionals(){return s.catalogProfessionals();}
-  @GetMapping("/admin/eps") public List<SchedulingDtos.EpsItem> eps(Authentication a){return s.adminEps(a);}
-  @PostMapping("/admin/eps") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.EpsItem createEps(@Valid @RequestBody SchedulingDtos.EpsRequest r,Authentication a){return s.createEps(r,a);}
-  @PatchMapping("/admin/eps/{id}") public SchedulingDtos.EpsItem updateEps(@PathVariable long id,@Valid @RequestBody SchedulingDtos.EpsRequest r,Authentication a){return s.updateEps(id,r,a);}
-  @GetMapping("/admin/plans") public List<SchedulingDtos.PlanItem> adminPlans(Authentication a){return s.adminPlans(a);}
-  @PostMapping("/admin/plans") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.PlanItem createPlan(@Valid @RequestBody SchedulingDtos.PlanRequest r,Authentication a){return s.createPlan(r,a);}
-  @PatchMapping("/admin/plans/{id}") public SchedulingDtos.PlanItem updatePlan(@PathVariable long id,@Valid @RequestBody SchedulingDtos.PlanRequest r,Authentication a){return s.updatePlan(id,r,a);}
-  @GetMapping("/admin/specialties") public List<SchedulingDtos.SpecialtyItem> specialties(Authentication a){return s.adminSpecialties(a);}
-  @PostMapping("/admin/specialties") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.SpecialtyItem createSpecialty(@Valid @RequestBody SchedulingDtos.SpecialtyRequest r,Authentication a){return s.createSpecialty(r,a);}
-  @PatchMapping("/admin/specialties/{id}") public SchedulingDtos.SpecialtyItem updateSpecialty(@PathVariable long id,@Valid @RequestBody SchedulingDtos.SpecialtyRequest r,Authentication a){return s.updateSpecialty(id,r,a);}
-  @GetMapping("/admin/professionals") public List<SchedulingDtos.ProfessionalItem> professionals(Authentication a){return s.professionals(a);}
-  @PostMapping("/admin/professionals") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.ProfessionalItem createProfessional(@Valid @RequestBody SchedulingDtos.ProfessionalRequest r,Authentication a){return s.createProfessional(r,a);}
-  @PutMapping("/admin/professionals/{id}/assignments") @ResponseStatus(HttpStatus.NO_CONTENT) public void assignments(@PathVariable long id,@Valid @RequestBody SchedulingDtos.ProfessionalAssignments r,Authentication a){s.assignments(id,r,a);}
-  @PatchMapping("/admin/professionals/{id}/active") @ResponseStatus(HttpStatus.NO_CONTENT) public void active(@PathVariable long id,@RequestParam boolean active,Authentication a){s.active(id,active,a);}
-  @GetMapping("/professional/availability-blocks") public List<SchedulingDtos.AvailabilityBlockItem> blocks(@RequestParam(required=false) LocalDate date,@RequestParam(required=false) Long locationId,Authentication a){return s.blocks(date,locationId,a);}
-  @PostMapping("/professional/availability-blocks") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.AvailabilityBlockItem block(@Valid @RequestBody SchedulingDtos.AvailabilityBlockRequest r,Authentication a){return s.addBlock(r,a);}
-  @PatchMapping("/professional/availability-blocks/{id}") public SchedulingDtos.AvailabilityBlockItem updateBlock(@PathVariable long id,@Valid @RequestBody SchedulingDtos.AvailabilityBlockRequest r,Authentication a){return s.updateBlock(id,r,a);}
-  @DeleteMapping("/professional/availability-blocks/{id}") @ResponseStatus(HttpStatus.NO_CONTENT) public void deleteBlock(@PathVariable long id,Authentication a){s.deleteBlock(id,a);}
-  @GetMapping("/availability") public List<SchedulingDtos.AvailabilityItem> availability(@RequestParam long locationId,@RequestParam long specialtyId,@RequestParam(required=false) Long professionalId,@RequestParam LocalDate date){return s.availability(locationId,specialtyId,professionalId,date);}
-  @PostMapping("/appointments") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.AppointmentItem appointment(@Valid @RequestBody SchedulingDtos.AppointmentRequest r,Authentication a){return s.book(r,a);}
-  @GetMapping("/admin/appointments") public List<SchedulingDtos.AppointmentItem> requested(@RequestParam(required=false) Long locationId,@RequestParam(required=false) Long professionalId,@RequestParam(required=false) Long specialtyId,@RequestParam(required=false) LocalDate date,Authentication a){return s.requested(locationId,professionalId,specialtyId,date,a);}
-  @PostMapping("/admin/appointments/{id}/decision") public SchedulingDtos.AppointmentItem decision(@PathVariable long id,@Valid @RequestBody SchedulingDtos.DecisionRequest r,Authentication a){return s.decide(id,r,a);}
-  @GetMapping("/users/me") public SchedulingDtos.ProfileItem profile(Authentication a){return s.profile(a);}
-  @PatchMapping("/users/me") public SchedulingDtos.ProfileItem profile(@Valid @RequestBody SchedulingDtos.PhoneRequest r,Authentication a){return s.updateProfile(r,a);}
-  @GetMapping("/users/me/affiliation") public SchedulingDtos.AffiliationItem affiliation(Authentication a){return s.affiliation(a);}
-  @PutMapping("/users/me/affiliation") public SchedulingDtos.AffiliationItem affiliation(@Valid @RequestBody SchedulingDtos.AffiliationRequest r,Authentication a){return s.saveAffiliation(r,a);}
-  @GetMapping("/appointments") public List<SchedulingDtos.AppointmentItem> mine(@RequestParam(required=false) String status,@RequestParam(required=false) LocalDate from,@RequestParam(required=false) LocalDate to,Authentication a){return s.mine(status,from,to,a);}
-  @PostMapping("/appointments/{id}/cancel") @ResponseStatus(HttpStatus.NO_CONTENT) public void cancel(@PathVariable long id,Authentication a){s.cancel(id,a);}
-  @GetMapping("/appointments/{id}/history") public List<SchedulingDtos.HistoryItem> history(@PathVariable long id,Authentication a){return s.history(id,a);}
-  @PostMapping("/professional/appointments/{id}/close") public SchedulingDtos.AppointmentItem close(@PathVariable long id,@Valid @RequestBody SchedulingDtos.CloseAppointmentRequest r,Authentication a){return s.close(id,r,a);}
-  @PostMapping("/appointments/{id}/reschedule-requests") @ResponseStatus(HttpStatus.CREATED) public SchedulingDtos.RescheduleItem requestReschedule(@PathVariable long id,@Valid @RequestBody SchedulingDtos.RescheduleRequest r,Authentication a){return s.requestReschedule(id,r,a);}
-  @GetMapping("/admin/reschedule-requests") public List<SchedulingDtos.RescheduleItem> pendingReschedules(@RequestParam(required=false) Long locationId,@RequestParam(required=false) Long professionalId,@RequestParam(required=false) Long specialtyId,@RequestParam(required=false) LocalDate date,Authentication a){return s.pendingReschedules(locationId,professionalId,specialtyId,date,a);}
-  @PostMapping("/admin/reschedule-requests/{id}/decision") public SchedulingDtos.RescheduleItem decideReschedule(@PathVariable long id,@Valid @RequestBody SchedulingDtos.RescheduleDecisionRequest r,Authentication a){return s.decideReschedule(id,r,a);}
-  @GetMapping("/professional/appointments") public List<SchedulingDtos.AppointmentItem> agenda(@RequestParam(required=false) LocalDate from,@RequestParam(required=false) LocalDate to,@RequestParam(required=false) Long locationId,Authentication a){return s.agenda(from,to,locationId,a);}
+  private final CatalogService catalogs;
+  private final ProfessionalService professionals;
+  private final AvailabilityService availability;
+  private final AppointmentService appointments;
+  private final RescheduleService reschedules;
+  private final ProfileService profiles;
+
+  public SchedulingController(CatalogService catalogs, ProfessionalService professionals, AvailabilityService availability,
+                              AppointmentService appointments, RescheduleService reschedules, ProfileService profiles) {
+    this.catalogs = catalogs;
+    this.professionals = professionals;
+    this.availability = availability;
+    this.appointments = appointments;
+    this.reschedules = reschedules;
+    this.profiles = profiles;
+  }
+
+  // Catálogos públicos de solo lectura (HU-001)
+  @GetMapping("/catalogs/locations") public List<CatalogItem> locations() { return catalogs.locations(); }
+  @GetMapping("/catalogs/regimes") public List<CatalogItem> regimes() { return catalogs.regimes(); }
+  @GetMapping("/catalogs/roles") public List<CatalogItem> roles() { return catalogs.roles(); }
+  @GetMapping("/catalogs/appointment-statuses") public List<CatalogItem> appointmentStatuses() { return catalogs.appointmentStatuses(); }
+  @GetMapping("/catalogs/reschedule-statuses") public List<CatalogItem> rescheduleStatuses() { return catalogs.rescheduleStatuses(); }
+  @GetMapping("/catalogs/insurance-plans") public List<PlanItem> plans() { return catalogs.activePlans(); }
+  @GetMapping("/catalogs/specialties") public List<SpecialtyItem> catalogSpecialties() { return catalogs.activeSpecialties(); }
+  @GetMapping("/catalogs/professionals")
+  public List<ProfessionalItem> catalogProfessionals(@RequestParam(required = false) Long specialtyId, @RequestParam(required = false) Long locationId) {
+    return professionals.catalog(specialtyId, locationId);
+  }
+
+  // EPS y planes (HU-008)
+  @GetMapping("/admin/eps") public List<EpsItem> eps(Authentication a) { return catalogs.eps(a); }
+  @PostMapping("/admin/eps") @ResponseStatus(HttpStatus.CREATED)
+  public EpsItem createEps(@Valid @RequestBody EpsRequest r, Authentication a) { return catalogs.createEps(r, a); }
+  @PatchMapping("/admin/eps/{id}") public EpsItem updateEps(@PathVariable long id, @Valid @RequestBody EpsRequest r, Authentication a) { return catalogs.updateEps(id, r, a); }
+  @DeleteMapping("/admin/eps/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteEps(@PathVariable long id, Authentication a) { catalogs.deleteEps(id, a); }
+  @GetMapping("/admin/plans") public List<PlanItem> adminPlans(Authentication a) { return catalogs.plans(a); }
+  @PostMapping("/admin/plans") @ResponseStatus(HttpStatus.CREATED)
+  public PlanItem createPlan(@Valid @RequestBody PlanRequest r, Authentication a) { return catalogs.createPlan(r, a); }
+  @PatchMapping("/admin/plans/{id}") public PlanItem updatePlan(@PathVariable long id, @Valid @RequestBody PlanRequest r, Authentication a) { return catalogs.updatePlan(id, r, a); }
+  @DeleteMapping("/admin/plans/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deletePlan(@PathVariable long id, Authentication a) { catalogs.deletePlan(id, a); }
+
+  // Especialidades (HU-009, HU-012)
+  @GetMapping("/admin/specialties") public List<SpecialtyItem> specialties(Authentication a) { return catalogs.specialties(a); }
+  @PostMapping("/admin/specialties") @ResponseStatus(HttpStatus.CREATED)
+  public SpecialtyItem createSpecialty(@Valid @RequestBody SpecialtyRequest r, Authentication a) { return catalogs.createSpecialty(r, a); }
+  @PatchMapping("/admin/specialties/{id}")
+  public SpecialtyItem updateSpecialty(@PathVariable long id, @Valid @RequestBody SpecialtyRequest r, Authentication a) { return catalogs.updateSpecialty(id, r, a); }
+  @DeleteMapping("/admin/specialties/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteSpecialty(@PathVariable long id, Authentication a) { catalogs.deleteSpecialty(id, a); }
+
+  // Profesionales (HU-010, HU-011)
+  @GetMapping("/admin/professionals") public List<ProfessionalAdminItem> professionals(Authentication a) { return professionals.list(a); }
+  @PostMapping("/admin/professionals") @ResponseStatus(HttpStatus.CREATED)
+  public ProfessionalAdminItem createProfessional(@Valid @RequestBody ProfessionalRequest r, Authentication a) { return professionals.create(r, a); }
+  @PutMapping("/admin/professionals/{id}/assignments") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void assignments(@PathVariable long id, @Valid @RequestBody ProfessionalAssignments r, Authentication a) { professionals.assign(id, r, a); }
+  @PatchMapping("/admin/professionals/{id}/active") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void active(@PathVariable long id, @RequestParam boolean active, Authentication a) { professionals.setActive(id, active, a); }
+
+  // Bloques y disponibilidad (HU-013 a HU-015)
+  @GetMapping("/professional/availability-blocks")
+  public List<AvailabilityBlockItem> blocks(@RequestParam(required = false) LocalDate date, @RequestParam(required = false) Long locationId, Authentication a) {
+    return availability.blocks(date, locationId, a);
+  }
+  @PostMapping("/professional/availability-blocks") @ResponseStatus(HttpStatus.CREATED)
+  public AvailabilityBlockItem block(@Valid @RequestBody AvailabilityBlockRequest r, Authentication a) { return availability.addBlock(r, a); }
+  @PatchMapping("/professional/availability-blocks/{id}")
+  public AvailabilityBlockItem updateBlock(@PathVariable long id, @Valid @RequestBody AvailabilityBlockRequest r, Authentication a) { return availability.updateBlock(id, r, a); }
+  @DeleteMapping("/professional/availability-blocks/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteBlock(@PathVariable long id, Authentication a) { availability.deleteBlock(id, a); }
+  @GetMapping("/availability")
+  public List<AvailabilityItem> availability(@RequestParam long locationId, @RequestParam long specialtyId,
+                                             @RequestParam(required = false) Long professionalId, @RequestParam LocalDate date) {
+    return availability.availability(locationId, specialtyId, professionalId, date);
+  }
+
+  // Citas (HU-016 a HU-020, HU-023 a HU-025)
+  @PostMapping("/appointments") @ResponseStatus(HttpStatus.CREATED)
+  public AppointmentItem appointment(@Valid @RequestBody AppointmentRequest r, Authentication a) { return appointments.book(r, a); }
+  @GetMapping("/appointments")
+  public List<AppointmentItem> mine(@RequestParam(required = false) String status, @RequestParam(required = false) LocalDate from,
+                                    @RequestParam(required = false) LocalDate to, Authentication a) {
+    return appointments.mine(status, from, to, a);
+  }
+  @PostMapping("/appointments/{id}/cancel") @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void cancel(@PathVariable long id, Authentication a) { appointments.cancel(id, a); }
+  @GetMapping("/appointments/{id}/history") public List<HistoryItem> history(@PathVariable long id, Authentication a) { return appointments.history(id, a); }
+  @GetMapping("/admin/appointments")
+  public List<AppointmentItem> requested(@RequestParam(required = false) Long locationId, @RequestParam(required = false) Long professionalId,
+                                         @RequestParam(required = false) Long specialtyId, @RequestParam(required = false) LocalDate date, Authentication a) {
+    return appointments.requested(locationId, professionalId, specialtyId, date, a);
+  }
+  @PostMapping("/admin/appointments/{id}/decision")
+  public AppointmentItem decision(@PathVariable long id, @Valid @RequestBody DecisionRequest r, Authentication a) { return appointments.decide(id, r, a); }
+  @GetMapping("/professional/appointments")
+  public List<AppointmentItem> agenda(@RequestParam(required = false) LocalDate from, @RequestParam(required = false) LocalDate to,
+                                      @RequestParam(required = false) Long locationId, Authentication a) {
+    return appointments.agenda(from, to, locationId, a);
+  }
+  @PostMapping("/professional/appointments/{id}/close")
+  public AppointmentItem close(@PathVariable long id, @Valid @RequestBody CloseAppointmentRequest r, Authentication a) { return appointments.close(id, r, a); }
+
+  // Reprogramación (HU-021, HU-022)
+  @PostMapping("/appointments/{id}/reschedule-requests") @ResponseStatus(HttpStatus.CREATED)
+  public RescheduleItem requestReschedule(@PathVariable long id, @Valid @RequestBody RescheduleRequest r, Authentication a) { return reschedules.request(id, r, a); }
+  @PostMapping("/appointments/{id}/reschedule-requests/{requestId}/keep")
+  public RescheduleItem keepAfterRejection(@PathVariable long id, @PathVariable long requestId, Authentication a) { return reschedules.keep(id, requestId, a); }
+  @GetMapping("/admin/reschedule-requests")
+  public List<RescheduleItem> pendingReschedules(@RequestParam(required = false) Long locationId, @RequestParam(required = false) Long professionalId,
+                                                 @RequestParam(required = false) Long specialtyId, @RequestParam(required = false) LocalDate date, Authentication a) {
+    return reschedules.pending(locationId, professionalId, specialtyId, date, a);
+  }
+  @PostMapping("/admin/reschedule-requests/{id}/decision")
+  public RescheduleItem decideReschedule(@PathVariable long id, @Valid @RequestBody RescheduleDecisionRequest r, Authentication a) { return reschedules.decide(id, r, a); }
+
+  // Perfil y afiliación (HU-006, HU-007)
+  @GetMapping("/users/me") public ProfileItem profile(Authentication a) { return profiles.profile(a); }
+  @PatchMapping("/users/me") public ProfileItem profile(@Valid @RequestBody PhoneRequest r, Authentication a) { return profiles.updatePhone(r, a); }
+  @GetMapping("/users/me/affiliation") public AffiliationItem affiliation(Authentication a) { return profiles.affiliation(a); }
+  @PutMapping("/users/me/affiliation") public AffiliationItem affiliation(@Valid @RequestBody AffiliationRequest r, Authentication a) { return profiles.saveAffiliation(r, a); }
 }

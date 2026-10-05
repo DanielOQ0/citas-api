@@ -10,6 +10,9 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+  web:
+    locale: es_CO
+    locale-resolver: fixed
 server.port: ${PORT:8080}
 app:
   jwt:
