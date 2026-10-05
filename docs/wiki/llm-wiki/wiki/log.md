@@ -1,0 +1,14 @@
+# Log de la LLM Wiki
+
+| Fecha | Operación | Resultado |
+|---|---|---|
+| 2026-09-15 | INGEST | Se incorporaron las fuentes normativas y de gobierno iniciales; se excluyó `database/reference/` para preservar la actividad de 3FN. |
+| 2026-09-15 | LEARN | Se registró que ambos repositorios parten en `main`, sin `develop`; la rama de trabajo de `citas-api` fue creada para documentar esta Wiki. |
+| 2026-09-22 | BUILDER/VERIFIER | Se implementó y verificó el incremento de identidad: registro USER, login JWT access/refresh, `/api/me`, refresh rotado, logout revocable y consumo Angular. `mvn test` y `npm run build` pasan. HU-003 lista; HU-002/HU-004 pendientes. |
+| 2026-09-24 | BUILDER/VERIFIER | Se corrigió el Compose de desarrollo: los servicios de API y Angular dejaron de quedar ociosos con `tail -f /dev/null`, se añadieron healthchecks y se definió `localhost:4200` como acceso web. |
+| 2026-09-24 | BUILDER/VERIFIER | Se añadió V2 de agenda: catálogos, perfiles profesionales, bloques/slots, reserva general/especializada, decisión ADMIN, afiliación opcional, perfil, cancelación e historial. La prueba focalizada de doble reserva quedó verde tras dos correcciones; `mvn test` y `npm run build` se ejecutaron en Docker. |
+| 2026-09-29 | BUILDER/VERIFIER | S2–S4: refresh automático y logout real en Angular, recuperación/cambio de contraseña, sincronización del usuario autenticado, filtros de solicitudes, motivo y retención de citas especializadas, historial/motivo de rechazo en Mis citas, ownership/cancelación, agenda profesional y edición/eliminación segura de bloques. `npm run build`, `npm test -- --watch=false` y `mvn test` en Docker quedan verdes tras hacer V5–V7 compatibles con H2/MySQL. HU-021–HU-026 siguen fuera del cierre S4. |
+| 2026-10-04 | DECISION | Entrevista de planificación con el usuario: 25 decisiones D-01…D-25 aprobadas una a una; todas las HU pasan a `Aprobada` ([plan](../../scrum/plan-cierre-2026-10.md)). |
+| 2026-10-04 | BUILDER/VERIFIER | Fase 1: se elimina el selector de vista y los mocks; la sesión se restaura desde `/api/me`; rutas lazy por rol con `canMatch`; 403 por rol en la API; se corrige el 401 de todo error (dispatch ERROR); SPA sin SSR/Express. E2E por rol en `evidencias/2026-10/roles`. |
+| 2026-10-04 | BUILDER/VERIFIER | Fase 2: dominio puro, `Clock` de Bogotá, servicios por área y contrato oficial; corrección de decisiones, reprogramación, disponibilidad de 60 min, retenciones y zona horaria. `mvn test`: 45 pruebas en verde. D-25: `db.sql` montado en Docker y reconstrucción verificada. |
+| 2026-10-05 | BUILDER/VERIFIER | Fases 3–5: pantallas de HU-002…HU-025 en `citas-web` (build, lint y 12 pruebas en verde); E2E exploratorio con `playwright-cli` (corrida 042347); HU-001…HU-026 en `Lista` y épicas en `Completada`; wiki actualizada (contrato, decisiones, riesgos, preguntas resueltas). |
