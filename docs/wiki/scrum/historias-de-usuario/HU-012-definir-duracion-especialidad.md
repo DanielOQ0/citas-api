@@ -2,7 +2,7 @@
 id: HU-012
 tipo: historia-de-usuario
 titulo: "Definir duración de especialidad"
-estado: Aprobada
+estado: Lista
 epica: "[[EP-004-disponibilidad-profesional]]"
 esfuerzo: Medio
 sprint_sugerido: S3
@@ -23,9 +23,9 @@ relacionadas: ["[[HU-015-consultar-disponibilidad]]"]
 ## Esfuerzo
 **Nivel:** Medio. **Justificación:** regla de configuración con efecto transversal.
 ## Tareas de desarrollo
-- [ ] **T-01 — Restringir duración a valores permitidos y migrar datos.** Dificultad: Medio.
-- [ ] **T-02 — Exponer configuración ADMIN y consumo de disponibilidad.** Dificultad: Medio.
-- [ ] **T-03 — Probar equivalencia slot y consecutividad.** Dificultad: Medio.
+- [x] **T-01 — Restringir duración a valores permitidos y migrar datos.** Dificultad: Medio.
+- [x] **T-02 — Exponer configuración ADMIN y consumo de disponibilidad.** Dificultad: Medio.
+- [x] **T-03 — Probar equivalencia slot y consecutividad.** Dificultad: Medio.
 ## Criterios de aceptación
 ### CA-01 — Valores válidos
 **Dado** ADMIN **cuando** configura una especialidad **entonces** solo puede elegir 30 o 60 minutos.
@@ -34,17 +34,20 @@ relacionadas: ["[[HU-015-consultar-disponibilidad]]"]
 ### CA-03 — Sin sobrescritura
 **Dado** PROFESSIONAL **cuando** gestiona agenda **entonces** no puede cambiar esa duración.
 ## Definition of Done
-- [ ] CA-01 a CA-03 validados con evidencia.
-- [ ] Migración, contrato y pruebas de ambas duraciones verificados; trazabilidad actualizada.
+- [x] CA-01 a CA-03 validados con evidencia.
+- [x] Migración, contrato y pruebas de ambas duraciones verificados; trazabilidad actualizada.
 ## Evidencia de validación
 | Elemento | Resultado | Evidencia | Observación |
 |---|---|---|---|
-| CA-01 | Pendiente | — | — |
-| CA-02 | Pendiente | — | — |
-| CA-03 / DoD | Pendiente | — | — |
+| CA-01 | Verificado | [pasos](../evidencias/2026-10/HU-012/pasos.md) · E2E | Solo 30 o 60; 45 → 400 |
+| CA-02 | Verificado | [pasos](../evidencias/2026-10/HU-012/pasos.md) · + HU-015/HU-017 | 30 min = 1 slot; 60 min = 2 consecutivos |
+| CA-03 | Verificado | [pasos](../evidencias/2026-10/HU-012/pasos.md) · API | PROFESSIONAL no cambia la duración (403) |
+
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
 - 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+- 2026-10-05 — `Lista` (cierre 2026-10): CA-01, CA-02, CA-03 verificados con pruebas de integración y E2E exploratorio ([pasos](../evidencias/2026-10/HU-012/pasos.md)); DoD completo.
 
 ## Notas y decisiones
 - No se deduce una duración distinta de las fuentes autorizadas.
+- Decisión aprobada 2026-10-04 · La duración mostrada de cada cita es la real (`scheduled_end_at - scheduled_start_at`).

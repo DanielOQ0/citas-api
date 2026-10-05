@@ -2,7 +2,7 @@
 id: EP-008
 tipo: epica
 titulo: "Agenda profesional y cierre de atención"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-023-consultar-agenda-propia]]", "[[HU-024-cerrar-atencion]]"]
 dependencias: ["[[EP-006-cita-especializada-y-administracion]]"]
 ---
@@ -44,8 +44,12 @@ Operación asistencial ficticia con privacidad y estados finales verificables.
 
 ## Criterio de completitud de la épica
 
-- [ ] Se comprueba ownership y cada cierre queda auditado.
+- [x] Se comprueba ownership y cada cierre queda auditado.
 
 ## Riesgos e incógnitas
 
 - Precisar el criterio “aplicable” de cierre si difiere de una cita pasada.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

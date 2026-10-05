@@ -9,3 +9,5 @@ Las claves, cardinalidades, estrategia de reserva concurrente, representación d
 Fuente: [requisitos de normalización](../raw/requisitos-normalizacion-3fn.md).
 
 El contenido de `database/reference/` está deliberadamente excluido hasta la comparación autorizada por el trainer.
+
+Actualización 2026-10-04: con autorización del usuario, el entorno usa `database/reference/db.sql` como base de MySQL (D-25) y Flyway aplica V2–V7 sobre su baseline; ver [riesgos](riesgos.md) para la deuda de construir el esquema desde cero.

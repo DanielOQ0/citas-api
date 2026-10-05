@@ -2,7 +2,7 @@
 id: EP-001
 tipo: epica
 titulo: "Identidad y seguridad de acceso"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-001-cargar-catalogos-fijos]]", "[[HU-002-registrar-usuario]]", "[[HU-003-iniciar-sesion]]", "[[HU-004-renovar-y-cerrar-sesion]]", "[[HU-005-recuperar-contrasena]]"]
 dependencias: []
 ---
@@ -47,9 +47,13 @@ Base segura para todas las capacidades privadas de USER, PROFESSIONAL y ADMIN.
 
 ## Criterio de completitud de la épica
 
-- [ ] Todas sus HU están `Completada` con evidencia.
-- [ ] No existe ruta privada sin autenticación, rol y ownership aplicables.
+- [x] Todas sus HU están `Completada` con evidencia.
+- [x] No existe ruta privada sin autenticación, rol y ownership aplicables.
 
 ## Riesgos e incógnitas
 
 - Definir la forma segura de exponer el token de recuperación en desarrollo.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

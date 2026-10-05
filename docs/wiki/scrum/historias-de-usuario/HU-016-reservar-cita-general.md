@@ -2,7 +2,7 @@
 id: HU-016
 tipo: historia-de-usuario
 titulo: "Reservar cita general"
-estado: Aprobada
+estado: Lista
 epica: "[[EP-005-busqueda-y-cita-general]]"
 esfuerzo: Alto
 sprint_sugerido: S3
@@ -23,9 +23,9 @@ relacionadas: ["[[HU-019-consultar-mis-citas]]"]
 ## Esfuerzo
 **Nivel:** Alto. **Justificación:** transacción de ocupación, estado y cliente.
 ## Tareas de desarrollo
-- [ ] **T-01 — Modelar cita/ocupación e invariantes con Flyway.** Dificultad: Alto.
-- [ ] **T-02 — Crear caso de uso atómico y respuesta de confirmación.** Dificultad: Alto.
-- [ ] **T-03 — Implementar confirmación cliente y pruebas de doble intento.** Dificultad: Alto.
+- [x] **T-01 — Modelar cita/ocupación e invariantes con Flyway.** Dificultad: Alto.
+- [x] **T-02 — Crear caso de uso atómico y respuesta de confirmación.** Dificultad: Alto.
+- [x] **T-03 — Implementar confirmación cliente y pruebas de doble intento.** Dificultad: Alto.
 ## Criterios de aceptación
 ### CA-01 — Autoaprobación
 **Dado** USER y franja libre de Medicina General **cuando** confirma **entonces** se crea cita `APPROVED` con profesional elegido.
@@ -34,18 +34,21 @@ relacionadas: ["[[HU-019-consultar-mis-citas]]"]
 ### CA-03 — Duración
 **Dado** duración aplicable **cuando** se reserva **entonces** se ocupan todos los slots consecutivos requeridos.
 ## Definition of Done
-- [ ] CA-01 a CA-03 validados con evidencia.
-- [ ] Flyway, control de concurrencia/índices, contrato, UI y pruebas de integración verificadas.
-- [ ] Estado inicial auditado conforme a [[HU-025-consultar-historial-de-estados]] al estar disponible; trazabilidad actualizada.
+- [x] CA-01 a CA-03 validados con evidencia.
+- [x] Flyway, control de concurrencia/índices, contrato, UI y pruebas de integración verificadas.
+- [x] Estado inicial auditado conforme a [[HU-025-consultar-historial-de-estados]] al estar disponible; trazabilidad actualizada.
 ## Evidencia de validación
 | Elemento | Resultado | Evidencia | Observación |
 |---|---|---|---|
-| CA-01 | Pendiente | — | — |
-| CA-02 | Pendiente | — | — |
-| CA-03 / DoD | Pendiente | — | — |
+| CA-01 | Verificado | [pasos](../evidencias/2026-10/HU-016/pasos.md) · 01/02 | Cita general APPROVED, auditada por SYSTEM |
+| CA-02 | Verificado | [pasos](../evidencias/2026-10/HU-016/pasos.md) · 03 | Franja tomada entre búsqueda y confirmación → 409 comprensible |
+| CA-03 | Verificado | [pasos](../evidencias/2026-10/HU-016/pasos.md) · + HU-017 | Se ocupan todos los slots de la duración |
+
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
 - 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+- 2026-10-05 — `Lista` (cierre 2026-10): CA-01, CA-02, CA-03 verificados con pruebas de integración y E2E exploratorio ([pasos](../evidencias/2026-10/HU-016/pasos.md)); DoD completo.
 
 ## Notas y decisiones
 - Medicina General debe quedar inequívoca en catálogo.
+- Decisión aprobada 2026-10-04 · La aprobación automática se audita con fuente SYSTEM (RN-02, RF-19).

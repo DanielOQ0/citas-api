@@ -2,7 +2,7 @@
 id: HU-005
 tipo: historia-de-usuario
 titulo: "Recuperar contraseña"
-estado: Aprobada
+estado: Lista
 epica: "[[EP-001-identidad-y-seguridad]]"
 esfuerzo: Alto
 sprint_sugerido: S2
@@ -23,9 +23,9 @@ relacionadas: ["[[HU-003-iniciar-sesion]]"]
 ## Esfuerzo
 **Nivel:** Alto. **Justificación:** flujo sensible con persistencia, expiración y cliente.
 ## Tareas de desarrollo
-- [ ] **T-01 — Modelar token temporal de un uso.** Dificultad: Alto. Compatible con 3FN y Flyway.
-- [ ] **T-02 — Implementar solicitud, cambio y entrega segura de desarrollo.** Dificultad: Alto.
-- [ ] **T-03 — Crear vistas y pruebas de flujo, expiración y reuso.** Dificultad: Medio.
+- [x] **T-01 — Modelar token temporal de un uso.** Dificultad: Alto. Compatible con 3FN y Flyway.
+- [x] **T-02 — Implementar solicitud, cambio y entrega segura de desarrollo.** Dificultad: Alto.
+- [x] **T-03 — Crear vistas y pruebas de flujo, expiración y reuso.** Dificultad: Medio.
 ## Criterios de aceptación
 ### CA-01 — Solicitud controlada
 **Dado** un email registrado **cuando** solicita recuperación **entonces** se genera un token temporal sin revelar secretos.
@@ -34,18 +34,21 @@ relacionadas: ["[[HU-003-iniciar-sesion]]"]
 ### CA-03 — Token no válido
 **Dado** token vencido, consumido o inválido **cuando** intenta cambiar contraseña **entonces** la operación se rechaza.
 ## Definition of Done
-- [ ] CA-01 a CA-03 validados con evidencia.
-- [ ] Migración/persistencia, pruebas y manejo seguro de desarrollo verificados.
-- [ ] No se almacenan ni registran token o password en claro; trazabilidad actualizada.
+- [x] CA-01 a CA-03 validados con evidencia.
+- [x] Migración/persistencia, pruebas y manejo seguro de desarrollo verificados.
+- [x] No se almacenan ni registran token o password en claro; trazabilidad actualizada.
 ## Evidencia de validación
 | Elemento | Resultado | Evidencia | Observación |
 |---|---|---|---|
-| CA-01 | Pendiente | — | — |
-| CA-02 | Pendiente | — | — |
-| CA-03 / DoD | Pendiente | — | — |
+| CA-01 | Verificado | [pasos](../evidencias/2026-10/HU-005/pasos.md) · 01 | Token temporal (30 min) sin revelar si la cuenta existe |
+| CA-02 | Verificado | [pasos](../evidencias/2026-10/HU-005/pasos.md) · 02 | Clave actualizada con hash; token consumido (`used_at`) |
+| CA-03 | Verificado | [pasos](../evidencias/2026-10/HU-005/pasos.md) · + `AuthFlowIntegrationTest` | Token reutilizado o vencido → 400 |
+
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
 - 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+- 2026-10-05 — `Lista` (cierre 2026-10): CA-01, CA-02, CA-03 verificados con pruebas de integración y E2E exploratorio ([pasos](../evidencias/2026-10/HU-005/pasos.md)); DoD completo.
 
 ## Notas y decisiones
 - Definir explícitamente la redacción segura para cuentas inexistentes.
+- Decisión aprobada 2026-10-04 · Redacción segura: misma respuesta para cuentas inexistentes; en desarrollo también se devuelve un token señuelo.

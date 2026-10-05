@@ -2,7 +2,7 @@
 id: EP-006
 tipo: epica
 titulo: "Cita especializada y administración"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-017-solicitar-cita-especializada]]", "[[HU-018-decidir-cita-especializada]]", "[[HU-019-consultar-mis-citas]]", "[[HU-020-cancelar-cita]]"]
 dependencias: ["[[EP-005-busqueda-y-cita-general]]"]
 ---
@@ -46,8 +46,12 @@ Proceso administrado con transparencia de estado y liberación correcta de capac
 
 ## Criterio de completitud de la épica
 
-- [ ] Todas las decisiones reflejan estado, motivo cuando aplica, ocupación/liberación y trazabilidad.
+- [x] Todas las decisiones reflejan estado, motivo cuando aplica, ocupación/liberación y trazabilidad.
 
 ## Riesgos e incógnitas
 
 - Acordar qué estados constituyen “terminal” para cancelar, sin contradecir transiciones explícitas.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

@@ -2,7 +2,7 @@
 id: EP-009
 tipo: epica
 titulo: "Auditoría y contrato REST"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-025-consultar-historial-de-estados]]", "[[HU-026-documentar-contrato-rest]]"]
 dependencias: ["[[EP-001-identidad-y-seguridad]]", "[[EP-008-agenda-profesional-y-cierre]]"]
 ---
@@ -44,8 +44,12 @@ Trazabilidad operativa y coordinación sin BFF entre `citas-web` y `citas-api`.
 
 ## Criterio de completitud de la épica
 
-- [ ] Las transiciones son trazables y el contrato describe las capacidades aprobadas sin secretos.
+- [x] Las transiciones son trazables y el contrato describe las capacidades aprobadas sin secretos.
 
 ## Riesgos e incógnitas
 
 - La ubicación/formato final del contrato debe acordarse al iniciar la HU, sin crear BFF.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

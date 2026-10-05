@@ -1,6 +1,6 @@
 ---
 tipo: indice-scrum
-estado: Pendiente de aprobación
+estado: Completado (cierre 2026-10)
 fuentes:
   - "PRD.md"
   - "RESTRICCIONES_TECNICAS.md"
@@ -11,7 +11,7 @@ fuentes:
 
 ## Propósito y límites
 
-Mapa trazable del producto ficticio de agendamiento. Cubre el PRD completo, las restricciones técnicas y los requisitos de datos hasta 3FN. No constituye implementación ni contrato REST definitivo. Todas las HU están en **Pendiente de aprobación**; ninguna puede pasar a `Aprobada` sin revisión explícita del usuario.
+Mapa trazable del producto ficticio de agendamiento. Cubre el PRD completo, las restricciones técnicas y los requisitos de datos hasta 3FN. No constituye implementación ni contrato REST definitivo. Todas las HU fueron aprobadas por el usuario el 2026-10-04 y quedaron **`Lista`** el 2026-10-05 con evidencia de pruebas de integración y E2E ([[plan-cierre-2026-10]], [[validacion-final-2026-10]], `evidencias/2026-10/`).
 
 ## Arquitectura de referencia
 

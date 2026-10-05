@@ -1,6 +1,6 @@
 # Índice de la LLM Wiki
 
-Última actualización: 2026-09-29 (cierre técnico de incrementos S2–S4 y contrato REST vigente).
+Última actualización: 2026-10-05 (cierre de HU-001 a HU-026: vistas por rol, contrato oficial y evidencia E2E).
 
 | Tema | Página |
 |---|---|
@@ -15,5 +15,6 @@
 | Riesgos | [riesgos.md](riesgos.md) |
 | Preguntas abiertas | [preguntas-abiertas.md](preguntas-abiertas.md) |
 | Registro cronológico | [log.md](log.md) |
+| Plan y validación del cierre | [plan](../../scrum/plan-cierre-2026-10.md) · [validación final](../../scrum/validacion-final-2026-10.md) · [evidencias](../../scrum/evidencias/2026-10/README.md) |
 
 Fuentes y reglas operativas: [RAW](../raw/), [registro de fuentes](../schema/registro-de-fuentes.md), [convenciones](../schema/convenciones.md).

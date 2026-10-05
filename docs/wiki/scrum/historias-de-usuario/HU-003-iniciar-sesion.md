@@ -41,13 +41,16 @@ relacionadas: ["[[HU-004-renovar-y-cerrar-sesion]]"]
 ## Evidencia de validación
 | Elemento | Resultado | Evidencia | Observación |
 |---|---|---|---|
-| CA-01 | Verificado | `citas-api/src/test/java/co/fcv/citas/AuthIntegrationTest.java`; `citas-web/src/app/services/auth.service.ts` | Login devuelve access/refresh separados y roles; Angular consume `/api/auth/login`. |
-| CA-02 | Verificado | `AuthIntegrationTest.invalidCredentialsDoNotIssueTokens`; `login.ts` | Backend responde `401`; UI muestra mensaje genérico. |
-| CA-03 / DoD | Verificado | `GET /api/me`, `authGuard.ts`, `npm run build` | Recurso privado exige Bearer; shell web redirige a login sin access token. |
+| CA-01 | Verificado | [pasos](../evidencias/2026-10/HU-003/pasos.md) · claims + roles/ | Access/refresh distintos con rol; inicio por rol |
+| CA-02 | Verificado | [pasos](../evidencias/2026-10/HU-003/pasos.md) · 01 | 401 genérico idéntico para correo o clave erróneos |
+| CA-03 | Verificado | [pasos](../evidencias/2026-10/HU-003/pasos.md) · evidencias roles/ | 403 por rol/ownership; rutas ajenas redirigen al inicio del rol |
+
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
 - 2026-09-22 — Builder/Verifier cross-repo: marcada `Lista` tras pasar pruebas REST Maven y build Angular.
 - 2026-10-04 — Incluida en el plan de cierre para re-verificación por el cambio de sesión y vistas por rol ([[plan-cierre-2026-10]]).
+- 2026-10-05 — Re-verificada tras el cambio de sesión y vistas por rol (`Lista` (cierre 2026-10)): CA-01, CA-02, CA-03 con evidencia ([pasos](../evidencias/2026-10/HU-003/pasos.md)).
 
 ## Notas y decisiones
 - El mecanismo de almacenamiento del token en cliente queda sujeto al framework y revisión de seguridad.
+- Decisión aprobada 2026-10-04 · D-23: el rol de la sesión se restaura desde `/api/me`; no existe selector de vista.

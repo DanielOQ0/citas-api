@@ -2,7 +2,7 @@
 id: EP-007
 tipo: epica
 titulo: "Reprogramación preservando la cita original"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-021-solicitar-reprogramacion]]", "[[HU-022-decidir-reprogramacion]]"]
 dependencias: ["[[EP-006-cita-especializada-y-administracion]]"]
 ---
@@ -44,8 +44,12 @@ Continuidad de atención con retención segura de la alternativa.
 
 ## Criterio de completitud de la épica
 
-- [ ] La cita original nunca se destruye antes de aprobación y cada resultado libera la franja correcta.
+- [x] La cita original nunca se destruye antes de aprobación y cada resultado libera la franja correcta.
 
 ## Riesgos e incógnitas
 
 - Se debe definir de forma explícita la atomicidad de cambio de slots durante la aprobación.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

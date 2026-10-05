@@ -2,7 +2,7 @@
 id: EP-004
 tipo: epica
 titulo: "Disponibilidad y slots de agenda"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-012-definir-duracion-especialidad]]", "[[HU-013-publicar-bloques-disponibilidad]]", "[[HU-014-consultar-calendario-profesional]]"]
 dependencias: ["[[EP-003-profesionales-y-asignaciones]]"]
 ---
@@ -45,8 +45,12 @@ Franja consistente y discretizada que sustenta reservas de 30 o 60 minutos.
 
 ## Criterio de completitud de la épica
 
-- [ ] Sus HU están `Completada` y se evidencia la invariabilidad de disponibilidad comprometida.
+- [x] Sus HU están `Completada` y se evidencia la invariabilidad de disponibilidad comprometida.
 
 ## Riesgos e incógnitas
 
 - La estrategia de persistencia para evitar carrera entre disponibilidad y reserva requiere decisión 3FN.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

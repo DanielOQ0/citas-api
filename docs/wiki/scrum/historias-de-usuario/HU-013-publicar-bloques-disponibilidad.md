@@ -2,7 +2,7 @@
 id: HU-013
 tipo: historia-de-usuario
 titulo: "Publicar bloques de disponibilidad"
-estado: Aprobada
+estado: Lista
 epica: "[[EP-004-disponibilidad-profesional]]"
 esfuerzo: Alto
 sprint_sugerido: S3
@@ -23,9 +23,9 @@ relacionadas: ["[[HU-015-consultar-disponibilidad]]"]
 ## Esfuerzo
 **Nivel:** Alto. **Justificación:** reglas temporales e integridad de reservas.
 ## Tareas de desarrollo
-- [ ] **T-01 — Modelar bloque/slot e índices, mediante Flyway.** Dificultad: Alto.
-- [ ] **T-02 — Implementar validaciones de fecha, sede, solape y compromiso.** Dificultad: Alto.
-- [ ] **T-03 — Construir gestión/calendario y pruebas de conflictos.** Dificultad: Alto.
+- [x] **T-01 — Modelar bloque/slot e índices, mediante Flyway.** Dificultad: Alto.
+- [x] **T-02 — Implementar validaciones de fecha, sede, solape y compromiso.** Dificultad: Alto.
+- [x] **T-03 — Construir gestión/calendario y pruebas de conflictos.** Dificultad: Alto.
 ## Criterios de aceptación
 ### CA-01 — Bloque futuro por sede válida
 **Dado** profesional habilitado en una sede **cuando** publica bloque futuro **entonces** se discretiza en slots de 30 min.
@@ -34,18 +34,21 @@ relacionadas: ["[[HU-015-consultar-disponibilidad]]"]
 ### CA-03 — Protección de compromiso
 **Dado** bloque futuro con cita retenida/reservada **cuando** intenta editarlo o borrarlo **entonces** se impide.
 ## Definition of Done
-- [ ] CA-01 a CA-03 validados con evidencia.
-- [ ] Migración, índices de agenda y pruebas de solape/compromiso verificadas.
-- [ ] Cliente, autorización por ownership y trazabilidad actualizados.
+- [x] CA-01 a CA-03 validados con evidencia.
+- [x] Migración, índices de agenda y pruebas de solape/compromiso verificadas.
+- [x] Cliente, autorización por ownership y trazabilidad actualizados.
 ## Evidencia de validación
 | Elemento | Resultado | Evidencia | Observación |
 |---|---|---|---|
-| CA-01 | Pendiente | — | — |
-| CA-02 | Pendiente | — | — |
-| CA-03 / DoD | Pendiente | — | — |
+| CA-01 | Verificado | [pasos](../evidencias/2026-10/HU-013/pasos.md) · 01 | Bloques discretizados en slots de 30 min |
+| CA-02 | Verificado | [pasos](../evidencias/2026-10/HU-013/pasos.md) · 01 | Pasado, solape, sede no asignada y desalineado rechazados |
+| CA-03 | Verificado | [pasos](../evidencias/2026-10/HU-013/pasos.md) · 02 | Bloque con citas reservadas o retenidas → 409 |
+
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
 - 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+- 2026-10-05 — `Lista` (cierre 2026-10): CA-01, CA-02, CA-03 verificados con pruebas de integración y E2E exploratorio ([pasos](../evidencias/2026-10/HU-013/pasos.md)); DoD completo.
 
 ## Notas y decisiones
 - Estrategia de lock/constraint de slots se define durante diseño técnico, no en esta especificación.
+- Decisión aprobada 2026-10-04 · D-13: se permite hoy si el inicio es futuro; las retenciones PENDING también protegen el bloque.

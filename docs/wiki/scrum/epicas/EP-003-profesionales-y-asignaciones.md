@@ -2,7 +2,7 @@
 id: EP-003
 tipo: epica
 titulo: "Profesionales y asignaciones operativas"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-010-registrar-profesional]]", "[[HU-011-asignar-y-habilitar-profesional]]"]
 dependencias: ["[[EP-001-identidad-y-seguridad]]", "[[EP-002-perfil-y-catalogos]]"]
 ---
@@ -44,8 +44,12 @@ Solo profesionales válidos y configurados participan en la agenda y búsqueda.
 
 ## Criterio de completitud de la épica
 
-- [ ] Sus HU están `Completada` y la elegibilidad de agenda se puede verificar.
+- [x] Sus HU están `Completada` y la elegibilidad de agenda se puede verificar.
 
 ## Riesgos e incógnitas
 
 - Definir política para citas ya existentes al desactivar un profesional.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

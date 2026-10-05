@@ -2,7 +2,7 @@
 id: EP-002
 tipo: epica
 titulo: "Perfil, afiliación y catálogos configurables"
-estado: Pendiente de aprobación
+estado: Completada
 historias: ["[[HU-006-gestionar-perfil]]", "[[HU-007-gestionar-afiliacion]]", "[[HU-008-gestionar-eps-y-planes]]", "[[HU-009-gestionar-especialidades]]"]
 dependencias: ["[[EP-001-identidad-y-seguridad]]"]
 ---
@@ -46,8 +46,12 @@ Datos consistentes para reservar y operar citas.
 
 ## Criterio de completitud de la épica
 
-- [ ] Sus HU están `Completada` y la persistencia mantiene 3FN para catálogos y afiliación.
+- [x] Sus HU están `Completada` y la persistencia mantiene 3FN para catálogos y afiliación.
 
 ## Riesgos e incógnitas
 
 - Definir campos de perfil que el USER puede modificar sin alterar su identidad verificada.
+
+## Cierre 2026-10
+
+Todas sus HU quedaron `Lista` con evidencia (pruebas de integración + E2E) el 2026-10-05; ver [[plan-cierre-2026-10]] y `evidencias/2026-10/`.

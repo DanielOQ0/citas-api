@@ -2,7 +2,7 @@
 
 ## Estado observado
 
-Este repositorio está en fase de bootstrap: no hay `pom.xml`, código fuente ni HU/DoD generadas todavía. Solo existen documentación, plantillas y material de automatización. No supongas paquetes, módulos, endpoints, esquema ni comandos de build que el repositorio aún no declare.
+Actualizado 2026-10-05. Proyecto Spring Boot 3.5 / Java 21 / Maven en `co.fcv.citas`: `auth` (JWT access/refresh, seguridad), `scheduling` (casos de uso por área + `domain` puro con reglas de estados y slots), `web` (formato de error) y `config` (`Clock` America/Bogota). Pruebas: `docker compose run --rm --no-deps citas-api-dev mvn -B test` (H2, migraciones V1–V4). Contrato oficial: `docs/wiki/llm-wiki/wiki/contratos-rest.md`. HU-001 a HU-026 en `Lista` ([plan de cierre](docs/wiki/scrum/plan-cierre-2026-10.md)). Deuda: hexagonal completa y Flyway desde cero (`docs/wiki/llm-wiki/wiki/riesgos.md`).
 
 ## Alcance
 
@@ -24,7 +24,7 @@ Leer antes de cualquier cambio, en este orden:
 3. `README.md` y este archivo.
 4. `docs/wiki/llm-wiki/wiki/index.md` y las páginas pertinentes, solo como contexto global.
 
-Si no existe una HU/DoD aprobada para el cambio, no inventar alcance funcional: informar el bloqueo o solicitar la especificación. Actualmente las carpetas de Scrum no contienen HU ni DoD.
+Si no existe una HU/DoD aprobada para el cambio, no inventar alcance funcional: informar el bloqueo o solicitar la especificación. Las HU vigentes y sus decisiones (D-01…D-25) están en `docs/wiki/scrum/`.
 
 La LLM Wiki es global y la mantiene el orquestador. Este agente puede consultarla, pero no crearla ni actualizarla.
 
