@@ -2,7 +2,7 @@
 id: HU-020
 tipo: historia-de-usuario
 titulo: "Cancelar cita"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-006-cita-especializada-y-administracion]]"
 esfuerzo: Alto
 sprint_sugerido: S4
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-025-consultar-historial-de-estados]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Estados terminales concretos se deben consolidar en contrato.

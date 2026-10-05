@@ -2,7 +2,7 @@
 id: HU-014
 tipo: historia-de-usuario
 titulo: "Consultar calendario profesional"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-004-disponibilidad-profesional]]"
 esfuerzo: Bajo
 sprint_sugerido: S3
@@ -40,5 +40,7 @@ relacionadas: []
 | CA-02 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Ninguna.

@@ -2,7 +2,7 @@
 id: HU-021
 tipo: historia-de-usuario
 titulo: "Solicitar reprogramación"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-007-reprogramacion]]"
 esfuerzo: Alto
 sprint_sugerido: S5
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-022-decidir-reprogramacion]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - La representación de franja propuesta no debe duplicar atributos de catálogo.

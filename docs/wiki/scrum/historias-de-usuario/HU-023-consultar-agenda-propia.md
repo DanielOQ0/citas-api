@@ -2,7 +2,7 @@
 id: HU-023
 tipo: historia-de-usuario
 titulo: "Consultar agenda propia"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-008-agenda-profesional-y-cierre]]"
 esfuerzo: Medio
 sprint_sugerido: S5
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-024-cerrar-atencion]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - La proyección debe limitarse a datos necesarios para sus citas.

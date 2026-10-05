@@ -47,5 +47,7 @@ relacionadas: ["[[HU-004-renovar-y-cerrar-sesion]]"]
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
 - 2026-09-22 — Builder/Verifier cross-repo: marcada `Lista` tras pasar pruebas REST Maven y build Angular.
+- 2026-10-04 — Incluida en el plan de cierre para re-verificación por el cambio de sesión y vistas por rol ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - El mecanismo de almacenamiento del token en cliente queda sujeto al framework y revisión de seguridad.

@@ -2,7 +2,7 @@
 id: HU-011
 tipo: historia-de-usuario
 titulo: "Asignar y habilitar profesional"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-003-profesionales-y-asignaciones]]"
 esfuerzo: Alto
 sprint_sugerido: S3
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-013-publicar-bloques-disponibilidad]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - La política sobre desactivación con citas existentes queda pendiente de revisión.

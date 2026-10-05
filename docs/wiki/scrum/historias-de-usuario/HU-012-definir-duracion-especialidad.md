@@ -2,7 +2,7 @@
 id: HU-012
 tipo: historia-de-usuario
 titulo: "Definir duración de especialidad"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-004-disponibilidad-profesional]]"
 esfuerzo: Medio
 sprint_sugerido: S3
@@ -44,5 +44,7 @@ relacionadas: ["[[HU-015-consultar-disponibilidad]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - No se deduce una duración distinta de las fuentes autorizadas.

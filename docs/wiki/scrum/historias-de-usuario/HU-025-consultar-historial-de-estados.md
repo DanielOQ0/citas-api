@@ -2,7 +2,7 @@
 id: HU-025
 tipo: historia-de-usuario
 titulo: "Consultar historial de estados"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-009-auditoria-y-contrato-rest]]"
 esfuerzo: Alto
 sprint_sugerido: S6
@@ -45,5 +45,7 @@ relacionadas: []
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Determinar por rol qué actores pueden leer qué historial durante aprobación.

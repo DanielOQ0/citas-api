@@ -2,7 +2,7 @@
 id: HU-016
 tipo: historia-de-usuario
 titulo: "Reservar cita general"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-005-busqueda-y-cita-general]]"
 esfuerzo: Alto
 sprint_sugerido: S3
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-019-consultar-mis-citas]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Medicina General debe quedar inequívoca en catálogo.

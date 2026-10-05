@@ -2,7 +2,7 @@
 id: HU-005
 tipo: historia-de-usuario
 titulo: "Recuperar contraseña"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-001-identidad-y-seguridad]]"
 esfuerzo: Alto
 sprint_sugerido: S2
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-003-iniciar-sesion]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Definir explícitamente la redacción segura para cuentas inexistentes.

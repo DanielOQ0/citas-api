@@ -2,7 +2,7 @@
 id: HU-026
 tipo: historia-de-usuario
 titulo: "Documentar contrato REST"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-009-auditoria-y-contrato-rest]]"
 esfuerzo: Alto
 sprint_sugerido: S6
@@ -94,6 +94,7 @@ El frontend consume directamente `citas-api`; esta HU consolida la especificaci�
 ## Historial de validación
 
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
 
 ## Notas y decisiones
 

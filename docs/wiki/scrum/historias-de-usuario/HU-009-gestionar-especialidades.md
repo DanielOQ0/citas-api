@@ -2,7 +2,7 @@
 id: HU-009
 tipo: historia-de-usuario
 titulo: "Gestionar especialidades"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-002-perfil-y-catalogos]]"
 esfuerzo: Alto
 sprint_sugerido: S2
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-012-definir-duracion-especialidad]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Medicina General debe ser un valor administrado/seed claramente identificable.

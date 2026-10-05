@@ -2,7 +2,7 @@
 id: HU-015
 tipo: historia-de-usuario
 titulo: "Consultar disponibilidad"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-005-busqueda-y-cita-general]]"
 esfuerzo: Alto
 sprint_sugerido: S3
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-016-reservar-cita-general]]", "[[HU-017-solicitar-cita-espe
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - La consulta no garantiza la franja hasta confirmación de reserva.

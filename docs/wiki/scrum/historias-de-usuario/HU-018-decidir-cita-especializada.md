@@ -2,7 +2,7 @@
 id: HU-018
 tipo: historia-de-usuario
 titulo: "Decidir cita especializada"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-006-cita-especializada-y-administracion]]"
 esfuerzo: Alto
 sprint_sugerido: S4
@@ -48,5 +48,7 @@ relacionadas: ["[[HU-019-consultar-mis-citas]]"]
 | CA-04 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - La bandeja de reprogramación es tratada por [[HU-022-decidir-reprogramacion]].

@@ -2,7 +2,7 @@
 id: HU-013
 tipo: historia-de-usuario
 titulo: "Publicar bloques de disponibilidad"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-004-disponibilidad-profesional]]"
 esfuerzo: Alto
 sprint_sugerido: S3
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-015-consultar-disponibilidad]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Estrategia de lock/constraint de slots se define durante diseño técnico, no en esta especificación.

@@ -2,7 +2,7 @@
 id: HU-019
 tipo: historia-de-usuario
 titulo: "Consultar mis citas"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-006-cita-especializada-y-administracion]]"
 esfuerzo: Medio
 sprint_sugerido: S4
@@ -44,5 +44,7 @@ relacionadas: ["[[HU-020-cancelar-cita]]", "[[HU-021-solicitar-reprogramacion]]"
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Ninguna.

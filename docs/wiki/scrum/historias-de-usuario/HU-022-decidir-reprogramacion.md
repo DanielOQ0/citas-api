@@ -2,7 +2,7 @@
 id: HU-022
 tipo: historia-de-usuario
 titulo: "Decidir reprogramación"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-007-reprogramacion]]"
 esfuerzo: Alto
 sprint_sugerido: S5
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-020-cancelar-cita]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - Acordar si el motivo de rechazo de reprogramación es obligatorio; PRD exige motivo “cuando corresponda”.

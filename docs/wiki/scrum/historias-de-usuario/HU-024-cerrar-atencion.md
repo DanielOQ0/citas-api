@@ -2,7 +2,7 @@
 id: HU-024
 tipo: historia-de-usuario
 titulo: "Cerrar atención"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-008-agenda-profesional-y-cierre]]"
 esfuerzo: Alto
 sprint_sugerido: S5
@@ -45,5 +45,7 @@ relacionadas: ["[[HU-025-consultar-historial-de-estados]]"]
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - “Aplicable” requiere una definición de negocio al aprobar esta HU.

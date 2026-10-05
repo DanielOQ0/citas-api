@@ -2,7 +2,7 @@
 id: HU-001
 tipo: historia-de-usuario
 titulo: "Cargar catálogos fijos"
-estado: Pendiente de aprobación
+estado: Aprobada
 epica: "[[EP-001-identidad-y-seguridad]]"
 esfuerzo: Medio
 sprint_sugerido: S2
@@ -46,5 +46,7 @@ relacionadas: ["[[HU-008-gestionar-eps-y-planes]]", "[[HU-009-gestionar-especial
 | CA-03 / DoD | Pendiente | — | — |
 ## Historial de validación
 - 2026-09-17 — Creada en `Pendiente de aprobación`.
+- 2026-10-04 — Aprobada por el usuario para cierre ([[plan-cierre-2026-10]]).
+
 ## Notas y decisiones
 - La forma de identificar Medicina General debe documentarse al implementar catálogo de especialidades.
